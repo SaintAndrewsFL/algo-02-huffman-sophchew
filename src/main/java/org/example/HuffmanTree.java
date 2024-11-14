@@ -1,28 +1,55 @@
 package org.example;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class HuffmanTree {
 
+    MyNode rootNode;
 
-    public class Node {
-       private Integer frequency;
-       private Character val;
-       private Node leftChild;
-       private Node rightChild;
-
-        public Node(Node leftChild, Node rightChild) {
-            this.leftChild = leftChild;
-            this.rightChild = rightChild;
-            frequency = leftChild.getFrequency() + rightChild.getFrequency();
-        }
-
-        public Node(Integer frequency, Character val) {
-            this.frequency = frequency;
-            this.val = val;
-        }
-
-        public Integer getFrequency() {
-            return frequency;
-        }
+    public HuffmanTree(MyNode rootNode) {
+        this.rootNode = rootNode;
     }
+
+    public void BFS() {
+        Queue<MyNode> level = new LinkedList<>();
+        int threshold = 1;
+        int emptyCounted = 0;
+        int count = 0;
+
+        level.add(rootNode);//first level
+        while(!level.isEmpty()) {
+            MyNode node = level.remove();
+            System.out.print(node.toString() + "    ");
+            count++;
+
+            if(node.getLeftChild() != null) {
+                level.add(node.getLeftChild());
+            } else {
+                emptyCounted++;
+            }
+            if(node.getRightChild() != null) {
+                level.add(node.getRightChild());
+            } else {
+                emptyCounted++;
+            }
+            if(count == threshold) {
+                System.out.println();
+                count = 0;
+                threshold*=2;
+                threshold -= emptyCounted;
+                emptyCounted = 0;
+
+            }
+        }
+
+
+
+
+    }
+
+
+
+
 }
 
